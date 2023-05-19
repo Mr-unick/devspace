@@ -1,0 +1,56 @@
+<div class="logo">
+  <a href="/login">
+    <h3>DevSpace</h3>
+  </a>
+</div>
+
+<% if(!user){ %>
+<form class="login" action="/login" method="post">
+  <input
+    type="text"
+    class="input-login"
+    name="username"
+    placeholder="Usernameame"
+  />
+  <input
+    type="password"
+    class="input-login"
+    name="password"
+    placeholder=" password"
+  />
+  <button type="submit" class="btn-login button">Login</button>
+</form>
+
+<% } else{ %> <% let dp=user.username.charAt(0).toUpperCase() %>
+<div class="profile">
+  <form action="/search" class="searchbox" method="post">
+    <input
+      type="text"
+      class="input-login"
+      name="search"
+      placeholder="search..."
+    />
+    <button type="submit" class="search-btn"><span>&#128269;</span></button>
+  </form>
+
+  <form action="/newpost" class="form" method="get">
+    <button class="create button" type="submit">+ create</button>
+  </form>
+
+  <form action="/logout" class="form" method="post">
+    <button class="logout button" type="submit">log out</button>
+  </form>
+  <div class="userinfo">
+    <h4><%= user.username %></h4>
+    <h5><%= user.email %></h5>
+  </div>
+  <% let colour="colour:red" %>
+
+  <form action="/profile/<%= user.username %>" method="get">
+    <button type="submit" class="img" id="form"><%= dp %></button>
+  </form>
+</div>
+<% } ;%>
+
+<script src="/searchapi.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

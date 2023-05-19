@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link type="text/css" rel="stylesheet" href="/home.css" />
+    <link type="text/css" rel="stylesheet" href="/search.css" />
+  </head>
+  <body>
+    <header class="navbar"><%- include('./nav.ejs') %></header>
+    <% let dp=userdata.Username.charAt(0).toUpperCase() %>
+    <div class="editprofile">
+      <div class="left-div">
+        <div class="profilelogodiv"><h2><%= dp %></h2></div>
+        <h2>Edit Profile</h2>
+      </div>
+
+      <form
+        action="/updateprofile/<%= userdata.id %>"
+        class="signup"
+        method="post"
+      >
+        <div class="error">
+          <% data.forEach((err)=>{ %> <% if(err=="signup succesfull" ){ %>
+
+          <h4 class="sucmsg">
+            <div class="suc"><span>&#10003;</span></div>
+            <%= err%>
+          </h4>
+
+          <% } else{%>
+
+          <h4 class="msg">
+            <div class="err">!</div>
+            <%= err%>
+          </h4>
+          <% } %> <% }) %>
+        </div>
+        <input
+          type="text"
+          class="input-signup"
+          name="Username"
+          placeholder="Usernameame"
+          value="<%= userdata.Username %>"
+        />
+        <input
+          type="email"
+          class="input-signup"
+          name="Email"
+          value="<%= userdata.Email %>"
+        />
+        <input
+          type="text"
+          name="Number"
+          class="input-signup"
+          pattern="\d+"
+          value="<%= userdata.Number %>"
+        />
+
+        <button class="button svaebtn" type="submit">save</button>
+      </form>
+    </div>
+  </body>
+  <footer>
+    Copyright <span>&#169;</span> 2023 DevSpace. All rights reserved
+  </footer>
+</html>

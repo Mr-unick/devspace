@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="text/css" rel="stylesheet" href="/home.css" />
+    <link type="text/css" rel="stylesheet" href="/search.css" />
+  </head>
+
+  <body>
+    <header class="navbar"><%- include('./nav.ejs') %></header>
+
+    <% if(posts.length>0){ %>
+    <div class="home_welcome">
+      <h1>Latest from those you follow</h1>
+      <div class="home-posts">
+        <% posts.forEach(function(data) { %>
+        <a href="/posts/<%= data._id%>">
+          <% let dp=data.auther.toString().charAt(0).toUpperCase() %>
+          <div class="post_box">
+            <div class="post-bottom">
+              <h2><%= data.tittle %></h2>
+
+              <% if (data.auther==user.username){ %>
+              <div class="btns">
+                <a href="/editpost/<%= data.id %>">
+                  <img
+                    src="https://img.icons8.com/sf-black/64/null/create-new.png"
+                    height="30"
+                    width="30"
+                  />
+                </a>
+                <form action="/deletepost/<%= data.id %>" method="post">
+                  <button>
+                    <img
+                      src="https://img.icons8.com/sf-regular-filled/48/null/filled-trash.png"
+                      height="30"
+                      width="30"
+                    />
+                  </button>
+                </form>
+              </div>
+              <% } %>
+            </div>
+            <div class="post-top">
+              <form action="/profile/<%= data.auther %>" method="get">
+                <button type="submit"><%= dp %></button>
+              </form>
+              <div class="date-user">
+                <h3>posted by <%= data.auther %></h3>
+
+                <h5><%= data.time.toString().slice(1,25)%></h5>
+              </div>
+            </div>
+            <div class="post-bottom">
+              <h3><%= data.discription %></h3>
+            </div>
+          </div>
+        </a>
+        <% }); %>
+      </div>
+    </div>
+    <% } else{%>
+    <div class="home_welcome">
+      <div class="no-post">
+        <h1>Hello <%= user.username %>, your feed is empty.</h1>
+        <h3>
+          Your feed displays the latest posts from the people you follow. If you
+          dgn't have any friends to follow thats okay; you can use the Search
+          feature in the top menu bar to find content written by people with
+          similar interests and then follow them.
+        </h3>
+      </div>
+    </div>
+
+    <% } %>
+
+    <footer>
+      Copyright <span>&#169;</span> 2023 DevSpace. All rights reserved
+    </footer>
+  </body>
+</html>

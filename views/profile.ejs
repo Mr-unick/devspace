@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="text/css" rel="stylesheet" href="/profile.css" />
+    <link type="text/css" rel="stylesheet" href="/home.css" />
+    <link type="text/css" rel="stylesheet" href="/search.css" />
+  </head>
+
+  <body>
+    <header class="navbar"><%- include('./nav.ejs') %></header>
+    <div class="profile-page">
+      <div class="profile2">
+        <div class="profile-img">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSE-WB_dSemzfNu6gNdQteldXOFuw-v9q7bi4nRY26cg&usqp=CAU&ec=48665699"
+          />
+
+          <% if (users.Username==user.username){ %>
+          <div class="right">
+          <a href="/editprofile/<%= users.id %>">  <button>edit profile</button></a>
+          </div>
+          <% }else{ %>
+
+          <div class="right">
+            <% if (users.followers.includes(user.id)){ %>
+              <form action="/unfollow/<%= users.id %>" method="post">
+                <button type="submit">unFollow</button>
+              </form>
+            <% } else{%>
+            <form action="/follow/<%= users.id %>" method="post">
+              <button type="submit">Follow</button>
+            </form>
+           
+            <% } %>
+          </div>
+          <% } %>
+        </div>
+        <div class="profile-info">
+          <div class="profile-info-top">
+            <h2><%= users.Username %></h2>
+            <h4><%= users.Profile %></h4>
+          </div>
+
+          <div class="profile-info-bottom">
+            <span
+              ><strong>&#9993;</strong>
+              <%= users.Email %>
+            </span>
+            <span>&#9742; <%= users.Number %> </span>
+          </div>
+          <div class="profile-info-mid">
+            <div class="tab">
+                <button class="tablinks" onclick="opentab(event, 'posts')"><span><strong> <%= posts.length %></strong>posts</span><span></span></button>
+                <button class="tablinks" onclick="opentab(event, 'following')"><span><strong> <%= users.following.length %></strong>following</span></button>
+                <button class="tablinks" onclick="opentab(event, 'followers')"><span><strong><%= users.followers.length %></strong>followers</span></button>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-box">
+    
+          
+          <!-- Tab content -->
+          <div id="posts" class="tabcontent">
+          
+            <% if (posts.length==0){ %>
+                <h2>no post </h2>
+                <% }else{ %>
+                    <div class="profile-posts">
+                        <% posts.forEach(function(data) { %>
+                            <a href="/posts/<%= data._id%>">
+                                <div class="post_box">
+                                    <div class="post-bottom">
+                                        <div class="date-user">
+                                            <h3>
+                                                <%= data.tittle %>
+                                            </h3>
+    
+                                            <h5>
+                                                <%= data.time.toString().slice(1,25)%>
+                                            </h5>
+                                        </div>
+    
+                                        <% if (data.auther==user.username){ %>
+    
+                                            <div class="btns">
+                                                
+                                                 <a href="/editpost/<%= data.id %>"><img
+                                                            src="https://img.icons8.com/sf-black/64/null/create-new.png"
+                                                            height="30" width="30" /></a>
+                                             
+                                                <form action="/deletepost/<%= data.id %>" method="post">
+                                                    <button>
+    
+                                                        <img src="https://img.icons8.com/sf-regular-filled/48/null/filled-trash.png"
+                                                            height="30" width="30" />
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <% } %>
+                                    </div>
+    
+    
+    
+                                </div>
+                                <% }); %>
+                    </div>
+                    </a>
+                    <% } %>
+          </div>
+          
+          
+          <div id="followers" class="tabcontent">
+            
+            <% followerslist.map(data=>{ %>
+              <div class=" userid">
+
+                      
+                <% let dp=data.Username.toString().charAt(0).toUpperCase() %>
+                <form action="/profile/<%= data.Username %>" method="get">
+                  <button type="submit"><%= dp %></button>
+                </form>
+                
+               <div class="info">
+                 <h3><%= data.Username %></h3>
+                 <h5><%= data.Email %></h5>
+               </div>
+           </div>
+           <% }) %>
+              </div>
+          <div id="following" class="tabcontent">
+            <% following.map(data=>{ %>
+                <div class=" userid">
+                 
+
+                    
+                    <% let dp=data.Username.toString().charAt(0).toUpperCase() %>
+                    <form action="/profile/<%= data.Username %>" method="get">
+                     <button type="submit"><%= dp %></button>
+                   </form>
+                  <div class="info">
+                    <h3><%= data.Username %></h3>
+                    <h5><%= data.Email %></h5>
+                  </div>
+
+               </div>
+                      <% }) %>
+          </div>
+         
+    </div>
+    </div>
+  </body>
+  <footer>
+    Copyright <span>&#169;</span> 2023 DevSpace. All rights reserved
+  </footer>
+  <script>
+    function opentab(evt, Name) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
+
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(Name).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  </script>
+</html>

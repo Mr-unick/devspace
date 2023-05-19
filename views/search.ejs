@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link type="text/css" rel="stylesheet" href="/home.css" />
+  </head>
+
+  <body>
+    <header class="navbar"><%- include('./nav.ejs') %></header>
+
+    <div class="search">
+      <% if(searchoutput.length>0){ %>
+      <div class="home_welcome">
+        <div class="home-posts">
+          <% searchoutput.forEach(function(data) { %>
+          <a href="/posts/<%= data._id%>">
+            <% let dp=data.auther.toString().charAt(0).toUpperCase() %>
+            <div class="post_box">
+              <div class="post-bottom">
+                <h2><%= data.tittle %></h2>
+              </div>
+              <div class="post-top">
+                <form action="/profile/<%= data.auther %>" method="get">
+                  <button type="submit"><%= dp %></button>
+                </form>
+                <div class="date-user">
+                  <h3>posted by <%= data.auther %></h3>
+
+                  <h5><%= data.time.toString().slice(1,25)%></h5>
+                </div>
+              </div>
+            </div>
+          </a>
+          <% }); %>
+        </div>
+      </div>
+      <% } else{%>
+      <h1>no results found</h1>
+      <% } %>
+    </div>
+  </body>
+</html>

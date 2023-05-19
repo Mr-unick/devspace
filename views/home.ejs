@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./home.css" />
+    <title>DevSpace</title>
+  </head>
+
+  <body>
+    <div class="home">
+      <header class="navbar"><%- include('./nav.ejs') %></header>
+    </div>
+
+    <div class="error">
+      <% data.forEach((err)=>{ %> <% if(err=="signup succesfull" ){ %>
+
+      <h4 class="sucmsg">
+        <div class="suc"><span>&#10003;</span></div>
+        <%= err%>
+      </h4>
+
+      <% } else{%>
+
+      <h4 class="msg">
+        <div class="err">!</div>
+        <%= err%>
+      </h4>
+      <% } %> <% }) %>
+    </div>
+
+    <div class="login-page">
+      <div class="left-div">
+        <div class="home-text">
+          <h1>Space for Geeks !!</h1>
+          <h3>
+            Enjoy post and tweets on new technologies by devlopers frodevelopers
+          </h3>
+        </div>
+      </div>
+      <form action="/" class="signup" method="post">
+        <input
+          type="text"
+          class="input-signup"
+          name="Username"
+          placeholder="Usernameame"
+        />
+        <input
+          type="email"
+          class="input-signup"
+          name="Email"
+          placeholder="Email"
+        />
+        <select name="Profile" class="input-signup">
+          <option value="Android devloper">Android devloper</option>
+          <option value="frontend devloper">frontend devloper</option>
+          <option value="Backend devloper">Backend devloper</option>
+          <option value="Fullstack devloper">Fullstack devloper</option>
+        </select>
+        <input
+          type="text"
+          name="Number"
+          class="input-signup"
+          pattern="\d+"
+          placeholder="Number"
+        />
+        <input
+          type="password"
+          class="input-signup"
+          name="Password"
+          placeholder=" Create password"
+        />
+        <button class="button butto" type="submit">Signup for DevSpace</button>
+      </form>
+    </div>
+    <footer>
+      Copyright <span>&#169;</span> 2023 DevSpace. All rights reserved
+    </footer>
+  </body>
+</html>

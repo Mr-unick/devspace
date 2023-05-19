@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/search.css" />
+  </head>
+
+  <body>
+    <header class="navbar"><%- include('./nav.ejs') %></header>
+
+    <div class="singlepost">
+      <div class="post_box">
+        <% let dp=posts.auther.toString().charAt(0).toUpperCase() %>
+        <div class="post-top">
+          <div class="post-top-left">
+            <form action="/profile/<%= posts.auther%>" method="get">
+              <button type="submit"><%= dp %></button>
+            </form>
+            <div class="date-user">
+              <h3><%= posts.auther%></h3>
+
+              <h5><%= posts.time.toString().slice(1,25)%></h5>
+            </div>
+          </div>
+          <% if (posts.auther==user.username){ %>
+          <div class="btns">
+            <form action="#">
+              <button>
+                <img
+                  src="https://img.icons8.com/sf-black/64/null/create-new.png"
+                  height="30"
+                  width="30"
+                />
+              </button>
+            </form>
+            <form action="/deletepost/<%= posts.id %>" method="post">
+              <button>
+                <img
+                  src="https://img.icons8.com/sf-regular-filled/48/null/filled-trash.png"
+                  height="30"
+                  width="30"
+                />
+              </button>
+            </form>
+          </div>
+          <% } %>
+        </div>
+        <div class="post-bottom">
+          <h2><%= posts.tittle %></h2>
+          <h3><%= posts.discription %></h3>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Copyright <span>&#169;</span> 2023 DevSpace. All rights reserved
+    </footer>
+  </body>
+</html>
