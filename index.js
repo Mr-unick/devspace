@@ -7,7 +7,7 @@ const router = new express.Router();
 const pass = "r1r0y3RbPyiPOS45";
 const app = express();
 const flash = require("connect-flash");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 const { authentication } = require("./views/auth");
 const {
   login,
